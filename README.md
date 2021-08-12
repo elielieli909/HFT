@@ -1,11 +1,11 @@
-Structure:
+##Structure:
 
-Current State:
+#Current State:
     - Orderbook
     - Up/Down volume (sequence of trades on bid or ask?)
     - Sequence of prices
 
-Model:
+#Model:
     Training Features:
         - Orderbook
         - Up/Down volume (sequence of trades on bid or ask?)
@@ -15,7 +15,7 @@ Model:
     Outputs:
         - A distribution of possible next prices could be useful?
 
-Strategies:
+#Strategies:
     Market Making:
         - Avelleneda + Stoikov inventory risk management
         - Constantly post best bid/ask
