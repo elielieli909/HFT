@@ -1,6 +1,7 @@
 package ftx_ws
 
 import (
+	"database/sql"
 	"encoding/json"
 	"flag"
 	"log"
@@ -10,10 +11,9 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/jackc/pgx/v4"
 )
 
-func SubscribeOB(conn *pgx.Conn) {
+func SubscribeOB(conn *sql.DB) {
 	flag.Parse()
 	log.SetFlags(0)
 
@@ -58,6 +58,7 @@ func SubscribeOB(conn *pgx.Conn) {
 			if !ok {
 				break
 			}
+			log.Printf("Dumping %d new updates", len(data.Bids)+len(data.Asks))
 			dump(conn, data)
 		}
 	}()

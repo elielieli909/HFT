@@ -1,12 +1,10 @@
 package ftx_ws
 
 import (
-	"context"
-
-	"github.com/jackc/pgx/v4"
+	"database/sql"
 )
 
-func dump(conn *pgx.Conn, data OBData) {
+func dump(conn *sql.DB, data OBData) {
 	// Need to split up the update by price
 	for _, bid := range data.Bids {
 		var action bool
@@ -15,7 +13,7 @@ func dump(conn *pgx.Conn, data OBData) {
 		} else {
 			action = false
 		}
-		conn.Exec(context.Background(), "INSERT INTO updates VALUES ($1, $2, $3, $4, $5)", data.Time, true, bid[0], bid[1], action)
+		conn.Exec("INSERT INTO updates VALUES ($1, $2, $3, $4, $5)", data.Time, true, bid[0], bid[1], action)
 	}
 	for _, ask := range data.Asks {
 		var action bool
@@ -24,7 +22,7 @@ func dump(conn *pgx.Conn, data OBData) {
 		} else {
 			action = false
 		}
-		conn.Exec(context.Background(), "INSERT INTO updates VALUES ($1, $2, $3, $4, $5)", data.Time, false, ask[0], ask[1], action)
+		conn.Exec("INSERT INTO updates VALUES ($1, $2, $3, $4, $5)", data.Time, false, ask[0], ask[1], action)
 	}
 }
 
