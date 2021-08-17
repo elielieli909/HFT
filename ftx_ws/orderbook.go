@@ -28,10 +28,12 @@ func SubscribeOB() {
 	}
 	defer c.Close()
 
+	// start receiving updates
 	done := make(chan struct{})
-
+	updates := make(chan OBData)
 	go func() {
 		defer close(done)
+		defer close(updates)
 		for {
 			_, message, err := c.ReadMessage()
 			if err != nil {
@@ -40,8 +42,22 @@ func SubscribeOB() {
 			}
 			var obu OBUpdate
 			json.Unmarshal(message, &obu)
-			log.Printf("recv: %s", message)
-			log.Println(obu)
+			updates <- obu.Data
+			// log.Printf("recv: %s", message)
+			// log.Println(obu)
+
+		}
+	}()
+
+	// Start storing updates in a binary file
+
+	go func() {
+		for {
+			data, ok := <-updates
+			if !ok {
+				break
+			}
+			dump(data)
 		}
 	}()
 

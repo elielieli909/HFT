@@ -5,5 +5,7 @@ import (
 )
 
 func main() {
-	ftx_ws.SubscribeTrades()
+	// Open file to save data
+
+	ftx_ws.SubscribeOB()
 }
