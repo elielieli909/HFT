@@ -10,9 +10,10 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/jackc/pgx/v4"
 )
 
-func SubscribeOB() {
+func SubscribeOB(conn *pgx.Conn) {
 	flag.Parse()
 	log.SetFlags(0)
 
@@ -57,7 +58,7 @@ func SubscribeOB() {
 			if !ok {
 				break
 			}
-			dump(data)
+			dump(conn, data)
 		}
 	}()
 
