@@ -23,4 +23,6 @@
             - Use the model to try to predict this
     Trend following:
         - Take +EV bets using the model
+    Classify ranging vs. trending on LTF
+    Identify correlation "breaks" (SOL, AXS, etc.; hop on "repricings")
     
